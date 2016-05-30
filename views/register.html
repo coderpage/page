@@ -1,0 +1,84 @@
+{{template "header".}}
+
+	<body> 
+    <div class="container">
+
+      <form class="form-register">
+        <h2 class="form-register-heading">注册</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="邮箱" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+       <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="确认密码" required>
+       
+        <button id="btn-register" class="btn btn-lg btn-primary btn-block" type="button" >注册</button>
+      </form>
+
+    </div> <!-- /container -->
+
+		<script type="text/javascript" src="../static/js/jq/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../static/js/jq/jquery-ui.js"></script>
+    <script type="text/javascript" src="../static/js/jq/jquery.json.min.js"></script>
+		<script type="text/javascript" src="../static/js/bs/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../static/js/page.js"></script>
+
+    <script type="text/javascript">
+
+      $("#btn-register").click(function(){
+        var email = $("#inputEmail").val();
+        var pwd = $("#inputPassword").val();
+        var pwdConfirm = $("#inputPasswordConfirm").val();
+
+        var emailRegex = /^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/;
+        if (!emailRegex.test(email)) {
+          showNotice("danger","请输入合法的邮箱","")
+          return
+        }
+        if (pwd == "") {
+          showNotice("danger","密码不能为空","")
+          return
+        }
+        if (pwd != pwdConfirm) {
+          showNotice("danger","密码两次输入不同","")
+          return
+        }
+      
+        var request = {
+          email: email,
+          pwd: pwd
+        }
+
+        var encoded = JSON.stringify(request)
+        $.ajax({
+          url: "/api/register",
+          type:"POST",
+          data: encoded,
+          dataType: "json",
+					contentType: "application/json; charset=utf-8",
+          success : function(data, status, xhr){
+            console.log("status" + data.status);
+						switch (data.status) {
+							case 200:
+								// location.assign(callback);
+                showNotice("success","注册成功","");
+								break;
+								case 10001:
+                case 10011:
+                showNotice("danger","注册失败","请求错误");
+								break;
+								case 10004:
+								showNotice("danger","注册失败","用户已存在");
+								break;
+							default:
+							showNotice("danger","注册失败，请重试","");
+						}
+          },
+          error : function(xhr, error, exception){
+            showNotice("danger","连接服务器失败","");
+          }
+        });
+      });
+    </script>
+	</body>
+</html>

@@ -1,0 +1,85 @@
+{{template "header".}}
+
+	<body>
+    <div class="container">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading">登录</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="邮箱" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <div class="checkbox">
+          <label>
+            <input id="remember-me" type="checkbox" value="remember-me"> 记住
+          </label>
+        </div>
+        <button id="btn-login" class="btn btn-lg btn-primary btn-block" type="button" >登录</button>
+      </form>
+
+    </div> <!-- /container -->
+
+		<script type="text/javascript" src="../static/js/jq/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../static/js/jq/jquery-ui.js"></script>
+    <script type="text/javascript" src="../static/js/jq/jquery.json.min.js"></script>
+		<script type="text/javascript" src="../static/js/bs/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../static/js/page.js"></script>
+
+    <script type="text/javascript">
+
+      $("#btn-login").click(function(){
+        var email = $("#inputEmail").val()
+        var pwd = $("#inputPassword").val()
+        var duration = "1"
+        if($("#remember-me").is(":checked")){
+          duration = "24"
+        }
+        var request = {
+          email: email,
+          pwd: pwd,
+          auth_duration: duration
+        }
+
+        var encoded = JSON.stringify(request)
+				console.log(encoded);
+        $.ajax({
+          url: "/api/login",
+          type:"POST",
+          data: encoded,
+          dataType: "json",
+					contentType: "application/json; charset=utf-8",
+          success : function(data, status, xhr){
+						switch (data.status) {
+							case 200:
+              console.log(data)
+                var user = data.user
+                console.log(user)
+                var authToken = data.auth_token
+                console.log(authToken)
+								setCookie("tk",authToken.value, authToken.expire);
+								setCookie("uid",user.id,30*24*60*60);
+								setCookie("uname",user.user_name,30*24*60*60);
+								var callback = $.getUrlParam('callback');
+								if (callback == null) {
+									callback = '/'
+								}
+								location.assign(callback);
+								break;
+								case 10006:
+								showNotice("danger","用户未激活","");
+								break;
+								case 10007:
+								showNotice("danger","用户名或密码错误","");
+								break;
+							default:
+							showNotice("danger","登录失败，请重试","");
+						}
+          },
+          error : function(xhr, error, exception){
+            showNotice("danger","连接服务器失败","");
+          }
+        });
+      });
+    </script>
+	</body>
+</html>
