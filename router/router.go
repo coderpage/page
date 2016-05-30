@@ -5,6 +5,7 @@ import ()
 // Register 注册路由
 func Register() {
 	registerAuths()
+	registerCommons()
 	//	beego.Router("/", &controller.HomeHandler{}, "get:HomePage")
 	//	beego.Router("/login", &controller.LoginHandler{}, "get:Login")
 	//	beego.Router("/login", &controller.LoginHandler{}, "post:LoginByEmail")
