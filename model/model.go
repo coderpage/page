@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	orm.RegisterModel(new(User), new(Auth))
+	orm.RegisterModel(new(User), new(Auth), new(Article))
 }
 
 // 注册数据库表

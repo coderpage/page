@@ -12,3 +12,11 @@ type Auth struct {
 	Redirect   string    // 回调
 	ExpiryDate time.Time // 有效期
 }
+
+func (this *Auth) IsValid() bool {
+	if this.Token != "" && this.Status == AuthStatusOK && !time.Now().After(this.ExpiryDate) {
+		return true
+	}
+
+	return false
+}

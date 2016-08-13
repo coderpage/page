@@ -22,6 +22,8 @@ func FindAuthByToken(token string) (auth *model.Auth, err error) {
 	auth = &model.Auth{Token: token}
 	o := orm.NewOrm()
 	err = o.QueryTable(auth).Filter(authKeyToken, token).One(auth)
-
+	if err == orm.ErrNoRows {
+		return auth, ErrNoRows
+	}
 	return auth, err
 }

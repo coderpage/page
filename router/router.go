@@ -6,6 +6,7 @@ import ()
 func Register() {
 	registerAuths()
 	registerCommons()
+	registerArticles()
 	//	beego.Router("/", &controller.HomeHandler{}, "get:HomePage")
 	//	beego.Router("/login", &controller.LoginHandler{}, "get:Login")
 	//	beego.Router("/login", &controller.LoginHandler{}, "post:LoginByEmail")

@@ -15,6 +15,7 @@ const (
 	TokenExpired        = 10009 // 令牌过期
 	SourceNotFound      = 10010 // 未找到数据
 	IllegalReqParam     = 10011 // 请求参数错误
+	AccessDenied        = 10012 // 请求被拒绝
 )
 
 var statusText = map[int]string{
@@ -30,6 +31,8 @@ var statusText = map[int]string{
 	WrongUserNameOrPwd:  "user name or password is wrong",
 	TokenExpired:        "token was expired",
 	SourceNotFound:      "source not found on server",
+	IllegalReqParam:     "illegal request params",
+	AccessDenied:        "access denied",
 }
 
 func Text(code int) string {
