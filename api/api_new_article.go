@@ -1,4 +1,4 @@
-package editor
+package api
 
 import (
 	"page/constant/rsp"
