@@ -1,0 +1,42 @@
+{{template "header".}}
+	<body>
+		<link href="../static/css/style-tmp.css" rel="stylesheet" />
+
+    <div class="container">
+			<div class="col-mb-10 col-md-offset-1" role="main">
+
+		 		<div>
+		 			<form>
+		 				<p class="title">
+		 					<label for="title" class="sr-only">标题</label>
+
+		 					<input type="text" id="title" name="title" autocomplete="off" aid="{{.Article.Id}}" value="{{.Article.Title}}" placeholder="标题" class="w-100 text title" />
+		 				</p>
+
+		 				<p>
+		 					<label for="text" class="sr-only">文章内容</label>
+		 					<textarea style="height: 350px" autocomplete="off" id="text" name="content" class="w-100 mono">{{.Article.Content}}</textarea>
+		 				</p>
+
+		 				<p class="submit clearfix">
+		 					<span class="right">
+		 						<button type="button" name="do" id="btn-save" class="btn">保存草稿</button>
+		 						<button type="button" name="do" id="btn-publish" value="publish" class="btn primary" >发布文章</button>
+		 					</span>
+		 				</p>
+
+		 			</form>
+
+		 		</div>
+		 	</div>
+    </div> <!-- /container -->
+		<script type="text/javascript" src="../static/js/jq/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../static/js/jq/jquery-ui.js"></script>
+		<script type="text/javascript" src="../static/js/pagedown.js"></script>
+		<script type="text/javascript" src="../static/js/stmd.js"></script>
+		<script type="text/javascript" src="../static/js/diff.js"></script>
+		<script type="text/javascript" src="../static/js/editor.js"></script>
+		<script type="text/javascript" src="../static/js/bs/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../static/js/page.js"></script>
+	</body>
+</html>
