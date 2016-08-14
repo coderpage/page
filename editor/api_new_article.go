@@ -1,7 +1,6 @@
 package editor
 
 import (
-	"page/constant/rqs"
 	"page/constant/rsp"
 	"page/constant/status"
 	"page/controller"
@@ -29,7 +28,8 @@ func (handler *ArticleEditorHandler) NewArticle() {
 	response := controller.NewResponse()
 
 	//读取 body
-	body, err := handler.ReadJsonBody()
+	article := &model.Article{}
+	err := handler.ReadJsonBody(article)
 	if err != nil {
 		response.SetStatus(status.UnprocessableEntity)
 		response.SetMessage(err.Error())
@@ -37,10 +37,6 @@ func (handler *ArticleEditorHandler) NewArticle() {
 		return
 	}
 
-	articleTitle := body[rqs.BodyArticleTitle]
-	articleContent := body[rqs.BodyArticleContent]
-
-	article := model.NewArticle(articleTitle.(string), articleContent.(string))
 	article.UserId = auth.Uid
 	err = storage.AddNewArticle(article)
 	// 数据库创建新文章失败

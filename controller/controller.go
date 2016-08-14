@@ -2,7 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/astaxie/beego"
 	"io/ioutil"
 	"page/constant/rqs"
@@ -15,17 +14,34 @@ type BaseController struct {
 	beego.Controller
 }
 
+// ReadJsonBody 读取请求 json 格式 body
+func (controller *BaseController) ReadJsonBody(body interface{}) (err error) {
+	bytes, err := controller.ReadBodyBytes()
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(bytes, &body)
+	return
+}
+
 // ReadJsonBody 读取 json 格式的 body 数据
-func (controller *BaseController) ReadJsonBody() (body map[string]interface{}, err error) {
+func (controller *BaseController) ReadJsonBodyMap() (body map[string]interface{}, err error) {
 	httpBody := controller.Ctx.Request.Body
 	defer httpBody.Close()
 	bodyBytes, err := ioutil.ReadAll(httpBody)
 	if err != nil {
 		return
 	}
-	fmt.Printf("body:", string(bodyBytes))
 	body = make(map[string]interface{})
 	err = json.Unmarshal(bodyBytes, &body)
+	return
+}
+
+// ReadBodyBytes 读取请求 body，[]byte 格式
+func (controller *BaseController) ReadBodyBytes() (body []byte, err error) {
+	httpBody := controller.Ctx.Request.Body
+	defer httpBody.Close()
+	body, err = ioutil.ReadAll(httpBody)
 	return
 }
 

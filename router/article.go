@@ -10,4 +10,5 @@ func registerArticles() {
 	// APIs
 	beego.Router("/api/article/create", &editor.ArticleEditorHandler{}, "post:NewArticle")
 	beego.Router("/api/article/get", &editor.ArticleEditorHandler{}, "get:GetArticle")
+	beego.Router("/api/article/publish", &editor.ArticleEditorHandler{}, "post:PublishArticle")
 }
