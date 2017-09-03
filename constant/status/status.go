@@ -15,6 +15,7 @@ const (
 	TokenExpired        = 10009 // 令牌过期
 	SourceNotFound      = 10010 // 未找到数据
 	IllegalReqParam     = 10011 // 请求参数错误
+	TokenIncorrect      = 10012 // 令牌错误
 )
 
 var statusText = map[int]string{

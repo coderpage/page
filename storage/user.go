@@ -1,10 +1,13 @@
 package storage
 
 import (
-	"github.com/astaxie/beego/orm"
 	"page/model"
 	"page/tool/secure"
 	"time"
+
+	"fmt"
+
+	"github.com/astaxie/beego/orm"
 )
 
 const (
@@ -32,8 +35,8 @@ func CreateUser(user *model.User) error {
 
 	// init default UserName DisplayName by Email
 	user.Password = encryptoPass
-	user.UserName, user.DisplayName, user.Created, user.Activated, user.Logged, user.Group =
-		user.Email, user.Email, time.Now(), time.Now(), time.Now(), model.UserGroupNoActived
+	user.UserName, user.DisplayName, user.Created, user.Activated, user.Logged =
+		user.Email, user.Email, time.Now(), time.Now(), time.Now()
 
 	// save user to mysql table `user`
 	o := orm.NewOrm()
@@ -91,6 +94,18 @@ func FindUserByEmail(email string) (user *model.User, err error) {
 	}
 
 	return user, nil
+}
+
+// IsUserExistByEmail 查询该 email 用户是否存在
+func IsUserExistByEmail(email string) bool {
+	o := orm.NewOrm()
+	var maps []orm.Params
+	num, _ := o.Raw("select 1 from user where email = ?", email).Values(&maps)
+	fmt.Println("num ", num, "  ", maps)
+	if num > 0 {
+		return true
+	}
+	return false
 }
 
 func UpdateUser(user *model.User, columns ...string) (err error) {

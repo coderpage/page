@@ -25,3 +25,21 @@ func FindAuthByToken(token string) (auth *model.Auth, err error) {
 
 	return auth, err
 }
+
+// FindAuthByKey 通过 key 查询 Auth
+func FindAuthByKey(key string) (auth *model.Auth, err error) {
+	auth = &model.Auth{Key: key}
+	o := orm.NewOrm()
+	err = o.QueryTable(auth).Filter("key", key).One(auth)
+
+	return auth, err
+}
+
+// FindAuthByKeyLatest 通过 key 查询最新的 Auth
+func FindAuthByKeyLatest(key string) (auth *model.Auth, err error) {
+	auth = &model.Auth{Key: key}
+	o := orm.NewOrm()
+	err = o.QueryTable(auth).Filter("key", key).OrderBy("-id").One(auth)
+
+	return auth, err
+}

@@ -2,7 +2,7 @@ package main
 
 import (
 	"page/model"
-	"page/router"
+	"page/routers"
 
 	"github.com/astaxie/beego"
 	_ "github.com/go-sql-driver/mysql"
@@ -10,9 +10,9 @@ import (
 
 func init() {
 	model.Register()
+	routers.Register()
 }
 
 func main() {
-	router.Register()
 	beego.Run()
 }

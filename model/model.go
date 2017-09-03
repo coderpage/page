@@ -1,9 +1,10 @@
 package model
 
 import (
+	"page/conf"
+
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
-	"page/conf"
 )
 
 func init() {

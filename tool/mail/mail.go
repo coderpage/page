@@ -55,5 +55,9 @@ func (mailer *Mailer) SendMail(to, name, subject, mailtype, body string) (err er
 	sendTo := strings.Split(to, ";")
 	addr := mailer.host + ":" + mailer.port
 	err = smtp.SendMail(addr, auth, mailer.account, sendTo, []byte(msg))
+
+	if err != nil {
+		fmt.Println("MAIL SMTP ERR: ", err.Error())
+	}
 	return err
 }

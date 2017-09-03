@@ -14,7 +14,7 @@
             <input id="remember-me" type="checkbox" value="remember-me"> 记住
           </label>
         </div>
-        <button id="btn-login" class="btn btn-lg btn-primary btn-block" type="button" >登录</button>
+        <button id="btn-login" class="btn btn-lg btn-primary btn-block btn-accent" type="button" >登录</button>
       </form>
 
     </div> <!-- /container -->
@@ -43,7 +43,7 @@
         var encoded = JSON.stringify(request)
 				console.log(encoded);
         $.ajax({
-          url: "/api/login",
+          url: "/api/v1/user/login",
           type:"POST",
           data: encoded,
           dataType: "json",
